@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>🎲 Kimdir Bu? – Çocuk Edebiyatı Yazarları</title>
+<style>
+  body { font-family: Arial, sans-serif; background-color: #fefefe; padding: 20px; }
+  h1 { color: #d6336c; }
+  .ipucu { margin: 10px 0; }
+  input[type="text"] { padding: 5px; width: 300px; }
+  button { padding: 5px 10px; margin-top: 5px; cursor: pointer; }
+  #feedback { margin: 10px 0; font-weight: bold; }
+  #footer { margin-top: 50px; text-align: right; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>🎲 Kimdir Bu? – Çocuk Edebiyatı Yazarları</h1>
+<div id="oyun">
+  <div class="ipucu" id="ipucu"></div>
+  <input type="text" id="cevapInput" placeholder="Cevabınızı yazın">
+  <button onclick="kontrolEt()">Cevapla</button>
+  <div id="feedback"></div>
+</div>
+<div id="puan"></div>
+<div id="footer">Hazırlayan: Dila OKUTAN</div>
+
+<script>
+const yazarlar = [
+  {isim:"Gülten Dayıoğlu", ipuc:["Türk çocuk edebiyatının en üretken kadın yazarlarından biriyim. Gezmeyi çok severim, 116 ülke gezdim.","“Fadiş” adlı romanım çocuk edebiyatının klasiklerindendir.","Bilim kurgu ve fantastik türlerinde de eser verdim."]},
+  {isim:"Muzaffer İzgü", ipuc:["Mizah yönü güçlü, çocuk ve gençlik romanlarıyla tanındım.","“Zıkkımın Kökü” ve “Bulutlara Simit Satan Çocuk” eserlerim arasındadır.","Çocukları günlük yaşamın zorluklarıyla yüzleştirip güldürmeyi severim."]},
+  {isim:"Yalvaç Ural", ipuc:["\"Armonikanın Şairi\", \"Dünya Çocuk Şiirinin Şampiyonu\" olarak anılırım.","Çocuk dergilerinde editörlük yaptım, MİÇO adlı haftalık çocuk dergim vardır.","\"Müzik Satan Çocuklar\" şiirim Çingeneceye çevrildi."]},
+  {isim:"Kemalettin Tuğcu", ipuc:["“Kolsuz Bebek” ve “Kuklacı” gibi romanlarla tanındım.","Fakir çocukların hikâyelerini anlattım.","Duygu ağırlıklı çocuk romanlarının öncüsüyüm."]},
+  {isim:"Sevim Ak", ipuc:["“Uçurtmam Bulut Şimdi”","Kitaplarımın resimleyen abimdir.","“Domates Saçlı Kız”"]},
+  {isim:"Behiç Ak", ipuc:["Tanınmış bir karikatüristim.","“Yaşasın Ç Harfi Kardeşliği”","“Bulutlara Şiir Yazan Çocuk”"]},
+  {isim:"Mustafa Ruhi Şirin", ipuc:["Masal ve çocuk hikâyelerinde Türk kültürünü işlerim.","Öğretici ve eğlendirici öyküler yazarım.","“Minik Kuşlar”"]},
+  {isim:"Ayla Çınaroğlu", ipuc:["“Küçük Mor Balık”","“Uzay Güzeli”","“Mago”"]},
+  {isim:"Mavisel Yener", ipuc:["“Dolunay Dedektifleri”","“Üşengeç”","“Mavi Elma”"]},
+  {isim:"Aytül Akal", ipuc:["“Geceyi Sevmeyen Çocuk”","“Bir Şeftali Bin Şeftali”","Mavisel Yener ile beraber çıkardığımız kitaplarımız vardır."]},
+  {isim:"Zeynep Cemali", ipuc:["“Patenli Kız”","“Ballı Çörek Kafeteryası”","Ankaralıyım"]},
+  {isim:"Rıfat Ilgaz", ipuc:["“Hababam Sınıfı” ile tanınırım, ama çocuk edebiyatında da eserlerim vardır.","“Bacaksız Serim”","“Öksüz Civciv”, “Cankurtaran Yılmaz”, “Küçükçekmece Okyanusu”, “Halime Kaptan”"]},
+  {isim:"Bilgin Adalı", ipuc:["“Zaman Bisikleti” fantastik türdedir.","“Atlantis’in Çocukları”","“Dede Korkut Hikayeleri”"]},
+  {isim:"Koray Avcı Çakman", ipuc:["“Efes’in Sırları”","“Gülen Sakız Ağacı”","“Almarpa’nın Gizemi”"]},
+  {isim:"Mevlana İdris Zengin", ipuc:["Çağdaş masalcıyımdır.","“Sufi ile Puf”","“Kuş Renkli Çocukluğum”"]},
+  {isim:"Fazıl Hüsnü Dağlarca", ipuc:["Çocuk şiirleri yazdım, çağdaş Türk şiirinin önemli isimlerindendir.","“Çocuk ve Allah”, “Üç Şehitler Destanı”","“Türkçem Benim Ses Bayrağım”"]},
+  {isim:"Şermin Yaşar", ipuc:["“Dedemin Bakkalı”","“Abartma Tozu”","“Oh Ne Âlâ Memleket”"]},
+  {isim:"Miyase Sertbarut", ipuc:["Çocuk ve gençlik edebiyatında üretken bir yazarım.","Masal ve kısa öykü türlerinde eserlerim vardır.","Çocukların hayal gücünü geliştiren ve eğlenceli eserler yazarım."]}
+];
+
+let sira = 0;
+let puan = 0;
+
+function gosterIpucu() {
+  document.getElementById("ipucu").innerHTML = `<b>İpucu:</b> ${yazarlar[sira].ipuc.join("<br>")}`;
+  document.getElementById("cevapInput").value = "";
+  document.getElementById("feedback").innerHTML = "";
+}
+
+function kontrolEt() {
+  let cevap = document.getElementById("cevapInput").value.trim();
+  if(cevap.toLowerCase() === yazarlar[sira].isim.toLowerCase()) {
+    document.getElementById("feedback").innerHTML = "✅ Doğru!";
+    puan++;
+  } else {
+    document.getElementById("feedback").innerHTML = `❌ Yanlış! Doğru cevap: ${yazarlar[sira].isim}`;
+  }
+  sira++;
+  if(sira < yazarlar.length) {
+    setTimeout(gosterIpucu, 1500);
+  } else {
+    setTimeout(() => {
+      document.getElementById("oyun").innerHTML = `<h2>Oyun Bitti!</h2><p>Puanınız: ${puan}/${yazarlar.length}</p>`;
+    }, 1500);
+  }
+}
+
+gosterIpucu();
+</script>
+
+</body>
+</html>
